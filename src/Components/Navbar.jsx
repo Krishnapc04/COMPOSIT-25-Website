@@ -88,7 +88,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <div
         id="mobile-menu"
-        className=" md:hidden bg-[#4b3926] text-center bg-opacity-10 backdrop-blur-lg shadow-2xl rounded-xl"
+        className=" md:hidden hidden bg-[#4b3926] text-center bg-opacity-10 backdrop-blur-lg shadow-2xl rounded-xl"
       >
         <div className="px-2 pt-2 pb-2 space-y-1">
           <a
@@ -121,12 +121,12 @@ const Navbar = () => {
           >
             Contact
           </a>
-          <a
-            href="#signup"
+          <Link
+            to={"/signup"}
             className="block px-3 py-2 rounded-md text-base font-medium text-gray-100 hover:bg-[#806240]"
           >
             Register
-          </a>
+          </Link>
         </div>
       </div>
     </nav>

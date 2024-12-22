@@ -1,7 +1,44 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link , useNavigate} from "react-router-dom";
 import TeamCanvas from "../Components/TeamCanvas";
+import BaseUrl from "../../const"
+
 const LoginForm = () => {
+
+ const [formData, setFormData] = useState({
+    email:"",
+    password:"",
+  });
+
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`${BaseUrl}/api/user/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+      },
+        body: JSON.stringify(formData),
+      });
+      // console.log(formData)
+      const data = await response.json();
+  
+      // console.log("Response:", data);
+      if (response.ok) {
+        console.log("user created successfully", data)
+        navigate('/')
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  };
+
   return (
     <>
       <TeamCanvas />
@@ -17,13 +54,16 @@ const LoginForm = () => {
         }}
       >
         <div className="w-[420px] bg-white bg-opacity-10 border-2 border-white border-opacity-20 backdrop-blur-md shadow-md text-white p-8 rounded-lg">
-          <form action="">
+          <form action="" onSubmit={handleSubmit}>
             <h1 className="text-3xl font-bold text-center mb-6">Login</h1>
 
             <div className="relative w-full h-12 mb-8">
               <input
                 type="text"
-                placeholder="Username"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email"
                 className="w-full h-full bg-transparent text-white text-base pl-5 pr-10 py-3 border-2 border-white border-opacity-20 rounded-full focus:outline-none placeholder-white"
               />
               <i className="bx bxs-user absolute right-4 top-1/2 transform -translate-y-1/2 text-xl"></i>
@@ -32,6 +72,9 @@ const LoginForm = () => {
             <div className="relative w-full h-12 mb-6">
               <input
                 type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 placeholder="Password"
                 className="w-full h-full bg-transparent text-white text-base pl-5 pr-10 py-3 border-2 border-white border-opacity-20 rounded-full focus:outline-none placeholder-white"
               />
