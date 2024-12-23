@@ -32,6 +32,7 @@ const LoginForm = () => {
       // console.log("Response:", data);
       if (response.ok) {
         console.log("user created successfully", data)
+        localStorage.setItem('userData', JSON.stringify(data)); // Save to local storage
         navigate('/')
       }
     } catch (error) {

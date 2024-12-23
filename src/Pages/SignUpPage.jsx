@@ -53,6 +53,7 @@ const SignupForm = () => {
       if (response.ok) {
         setSuccess("User created successfully.");
         console.log("user created successfully", data)
+        localStorage.setItem('userData', JSON.stringify(data)); // Save to local storage
         navigate("/");
       }
     } catch (error) {
